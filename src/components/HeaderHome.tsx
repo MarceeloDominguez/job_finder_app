@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 4,
+    paddingHorizontal: 20,
   },
   wrapInfoUser: {
     flexDirection: "row",

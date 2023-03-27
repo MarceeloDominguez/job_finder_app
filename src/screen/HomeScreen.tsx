@@ -4,6 +4,8 @@ import { Color, Font, Sizes } from "../constants/theme";
 import * as SplashScreen from "expo-splash-screen";
 import useCustomFonts from "../hooks/useCustomFonts";
 import HeaderHome from "../components/HeaderHome";
+import SelectJob from "../components/SelectJob";
+import UrgentlyNeedJob from "../components/UrgentlyNeedJob";
 
 export default function HomeScreen() {
   const { fontsLoaded } = useCustomFonts();
@@ -20,11 +22,13 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderHome />
         <View style={styles.containerTitle}>
           <Text style={styles.title}>Find you big dream job</Text>
         </View>
+        <SelectJob />
+        <UrgentlyNeedJob />
       </ScrollView>
     </SafeAreaView>
   );
@@ -34,7 +38,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Color.primary,
     flexGrow: 1,
-    paddingHorizontal: 20,
   },
   containerTitle: {
     maxWidth: 250,
@@ -45,5 +48,6 @@ const styles = StyleSheet.create({
     fontFamily: Font.bold,
     letterSpacing: 0.4,
     lineHeight: 44,
+    paddingHorizontal: 20,
   },
 });
