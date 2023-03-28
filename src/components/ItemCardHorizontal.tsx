@@ -1,34 +1,35 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 import { Color, Font, Sizes, WIDTH_SCREEN } from "../constants/theme";
 import { Job } from "../interface/jobinterface";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 
 type Prop = {
   item: Job;
 };
 
 export default function ItemCardHorizontal({ item }: Prop) {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      activeOpacity={0.8}
+      onPress={() =>
+        navigation.dispatch(CommonActions.navigate("DetailsScreen", item))
+      }
+    >
       <View style={styles.wrapLogo}>
-        {item.employer_logo ? (
-          <Image
-            source={{
-              uri: item.employer_logo,
-            }}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        ) : (
-          <Image
-            source={{
-              uri: "https://i.pinimg.com/564x/a1/a6/d0/a1a6d07762619ed6d38e11269f573d32.jpg",
-            }}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        )}
+        <Image
+          source={{
+            uri: item.employer_logo
+              ? item.employer_logo
+              : "https://i.pinimg.com/564x/a1/a6/d0/a1a6d07762619ed6d38e11269f573d32.jpg",
+          }}
+          style={styles.logo}
+          resizeMode="contain"
+        />
         <Icon name="bookmark-outline" size={22} color={Color.secondary} />
       </View>
       <View style={styles.wrapInfoJob}>
@@ -47,7 +48,7 @@ export default function ItemCardHorizontal({ item }: Prop) {
           <Text style={styles.employmentType}>{item.job_employment_type}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

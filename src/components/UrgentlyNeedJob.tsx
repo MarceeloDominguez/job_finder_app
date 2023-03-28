@@ -1,11 +1,20 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 import { Color, Font, Sizes } from "../constants/theme";
 import { useFetch } from "../hooks/useFetch";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 
 export default function UrgentlyNeedJob() {
   const { urgentlyNeedJob, loading, error } = useFetch("react");
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -19,25 +28,25 @@ export default function UrgentlyNeedJob() {
                 <ActivityIndicator size={20} color={Color.secondary} />
               </View>
             ) : (
-              <View style={styles.card}>
+              <TouchableOpacity
+                style={styles.card}
+                activeOpacity={0.8}
+                onPress={() =>
+                  navigation.dispatch(
+                    CommonActions.navigate("DetailsScreen", item)
+                  )
+                }
+              >
                 <View style={styles.wrapLogo}>
-                  {item.employer_logo ? (
-                    <Image
-                      source={{
-                        uri: item.employer_logo,
-                      }}
-                      style={styles.logo}
-                      resizeMode="contain"
-                    />
-                  ) : (
-                    <Image
-                      source={{
-                        uri: "https://i.pinimg.com/564x/a1/a6/d0/a1a6d07762619ed6d38e11269f573d32.jpg",
-                      }}
-                      style={styles.logo}
-                      resizeMode="contain"
-                    />
-                  )}
+                  <Image
+                    source={{
+                      uri: item.employer_logo
+                        ? item.employer_logo
+                        : "https://i.pinimg.com/564x/a1/a6/d0/a1a6d07762619ed6d38e11269f573d32.jpg",
+                    }}
+                    style={styles.logo}
+                    resizeMode="contain"
+                  />
                   <View style={styles.wrapInfo}>
                     <Text numberOfLines={1} style={styles.employerName}>
                       {item.employer_name}
@@ -59,7 +68,7 @@ export default function UrgentlyNeedJob() {
                     {item.job_country}
                   </Text>
                 </View>
-              </View>
+              </TouchableOpacity>
             )}
           </View>
         );

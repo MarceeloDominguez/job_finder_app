@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { options } from "../helpers/headersApi";
 import { Job } from "../interface/jobinterface";
 
 interface JobsState {
@@ -13,14 +14,6 @@ export const useFetch = (job: string) => {
     typeJob: [],
     urgentlyNeedJob: [],
   });
-
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "",
-      "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
-    },
-  };
 
   const getData = async () => {
     setLoading(true);

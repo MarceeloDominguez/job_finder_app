@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Color, Font } from "../constants/theme";
+import { Color, Font, Sizes } from "../constants/theme";
 import CardHorizontal from "./CardHorizontal";
 
 const typeJobs = [
   "Web Developer",
   "UI/UX",
+  "React Native Developer",
   "Public Relation",
   "Graphic Design",
-  "React Native Developer",
 ];
 
 export default function SelectJob() {
@@ -71,5 +71,6 @@ const styles = StyleSheet.create({
   titleButton: {
     fontFamily: Font.semiBold,
     letterSpacing: 0.3,
+    fontSize: Sizes.small,
   },
 });
