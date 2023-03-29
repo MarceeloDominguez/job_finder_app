@@ -9,70 +9,75 @@ import {
 } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 import { Color, Font, Sizes } from "../constants/theme";
-import { useFetch } from "../hooks/useFetch";
 import { CommonActions, useNavigation } from "@react-navigation/native";
+import { useFetchUrgentlyNeedJob } from "../hooks/useFetchUrgentlyNeedJob";
 
 export default function UrgentlyNeedJob() {
-  const { urgentlyNeedJob, loading, error } = useFetch("react");
+  const { urgentlyNeedJob, loading, error } =
+    useFetchUrgentlyNeedJob("React js");
+
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Urgently Need</Text>
       {error && <Text style={styles.error}>Error</Text>}
-      {urgentlyNeedJob?.map((item, index) => {
-        return (
-          <View key={index}>
-            {loading ? (
-              <View style={styles.loading}>
-                <ActivityIndicator size={20} color={Color.secondary} />
+
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size={40} color={Color.secondary} />
+        </View>
+      ) : (
+        <>
+          {urgentlyNeedJob?.map((item, index) => {
+            return (
+              <View key={index}>
+                <TouchableOpacity
+                  style={styles.card}
+                  activeOpacity={0.8}
+                  onPress={() =>
+                    navigation.dispatch(
+                      CommonActions.navigate("DetailsScreen", item)
+                    )
+                  }
+                >
+                  <View style={styles.wrapLogo}>
+                    <Image
+                      source={{
+                        uri: item.employer_logo
+                          ? item.employer_logo
+                          : "https://i.pinimg.com/564x/a1/a6/d0/a1a6d07762619ed6d38e11269f573d32.jpg",
+                      }}
+                      style={styles.logo}
+                      resizeMode="contain"
+                    />
+                    <View style={styles.wrapInfo}>
+                      <Text numberOfLines={1} style={styles.employerName}>
+                        {item.employer_name}
+                      </Text>
+                      <Text numberOfLines={1} style={styles.jobTitle}>
+                        {item.job_title}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={styles.wrapFooterInfo}>
+                    <View style={styles.employmentTypeContainer}>
+                      <Text style={styles.employmentType}>
+                        {item.job_employment_type}
+                      </Text>
+                    </View>
+                    <Text style={styles.jobcountry}>
+                      <Icon name="location" size={15} color={Color.secondary} />{" "}
+                      {item.job_city ? item.job_city : item.job_state}/
+                      {item.job_country}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-            ) : (
-              <TouchableOpacity
-                style={styles.card}
-                activeOpacity={0.8}
-                onPress={() =>
-                  navigation.dispatch(
-                    CommonActions.navigate("DetailsScreen", item)
-                  )
-                }
-              >
-                <View style={styles.wrapLogo}>
-                  <Image
-                    source={{
-                      uri: item.employer_logo
-                        ? item.employer_logo
-                        : "https://i.pinimg.com/564x/a1/a6/d0/a1a6d07762619ed6d38e11269f573d32.jpg",
-                    }}
-                    style={styles.logo}
-                    resizeMode="contain"
-                  />
-                  <View style={styles.wrapInfo}>
-                    <Text numberOfLines={1} style={styles.employerName}>
-                      {item.employer_name}
-                    </Text>
-                    <Text numberOfLines={1} style={styles.jobTitle}>
-                      {item.job_title}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.wrapFooterInfo}>
-                  <View style={styles.employmentTypeContainer}>
-                    <Text style={styles.employmentType}>
-                      {item.job_employment_type}
-                    </Text>
-                  </View>
-                  <Text style={styles.jobcountry}>
-                    <Icon name="location" size={15} color={Color.secondary} />{" "}
-                    {item.job_city ? item.job_city : item.job_state}/
-                    {item.job_country}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          </View>
-        );
-      })}
+            );
+          })}
+        </>
+      )}
     </View>
   );
 }

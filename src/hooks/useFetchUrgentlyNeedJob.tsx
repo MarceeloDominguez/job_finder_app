@@ -2,21 +2,20 @@ import { useEffect, useState } from "react";
 import { options } from "../helpers/headersApi";
 import { Job } from "../interface/jobinterface";
 
-export const useFetch = (typeJob: string) => {
-  const [jobs, setJobs] = useState<Job[]>([]);
+export const useFetchUrgentlyNeedJob = (job: string) => {
+  const [urgentlyNeedJob, setUrgentlyNeedJob] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const getData = async () => {
     setLoading(true);
     try {
-      const dataJobsType = await fetch(
-        `https://jsearch.p.rapidapi.com/search?query=${typeJob}&page=1&num_pages=1`,
+      const dataFetch = await fetch(
+        `https://jsearch.p.rapidapi.com/search?query=${job}&page=1&num_pages=1`,
         options
       );
-      const respJobsType = await dataJobsType.json();
-
-      setJobs(respJobsType.data);
+      const resp = await dataFetch.json();
+      setUrgentlyNeedJob(resp.data);
       setLoading(false);
       setError(false);
     } catch (error) {
@@ -27,8 +26,8 @@ export const useFetch = (typeJob: string) => {
   };
 
   useEffect(() => {
-    getData();
-  }, [typeJob]);
+    setTimeout(getData, 1500);
+  }, [job]);
 
-  return { jobs, loading, error };
+  return { urgentlyNeedJob, loading, error };
 };

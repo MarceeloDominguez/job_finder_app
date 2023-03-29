@@ -15,7 +15,7 @@ type Prop = {
 };
 
 export default function CardHorizontal({ selectTypeJob }: Prop) {
-  const { typeJob, loading, error } = useFetch(selectTypeJob);
+  const { jobs, loading, error } = useFetch(selectTypeJob);
 
   return (
     <View>
@@ -31,7 +31,7 @@ export default function CardHorizontal({ selectTypeJob }: Prop) {
           showsHorizontalScrollIndicator={false}
           style={styles.containerCards}
         >
-          {typeJob?.map((item, index) => {
+          {jobs?.map((item, index) => {
             return <ItemCardHorizontal item={item} key={index} />;
           })}
           <View style={styles.finalSpace} />
