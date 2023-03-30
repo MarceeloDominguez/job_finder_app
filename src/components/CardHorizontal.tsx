@@ -19,7 +19,7 @@ export default function CardHorizontal({ selectTypeJob }: Prop) {
 
   return (
     <View>
-      <Text style={styles.title}>Urgently Need</Text>
+      <Text style={styles.title}>{selectTypeJob}</Text>
       {error && <Text style={styles.error}>Error</Text>}
       {loading ? (
         <View style={styles.loading}>
